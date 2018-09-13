@@ -1,0 +1,6 @@
+data/worlds/*
+!data/worlds/put-world-folder-here.txt
+backup*.zip
+backup.sh
+server.properties
+

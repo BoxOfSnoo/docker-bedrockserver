@@ -6,7 +6,7 @@ services:
     container_name: bedrock_server
     environment:
 # Update this as the file changes.  Please be sure to agree to the EULA
-      - BEDROCK_DOWNLOAD_ZIP=https://minecraft.azureedge.net/bin-linux/bedrock-server-1.6.1.0.zip
+      - BEDROCK_DOWNLOAD_ZIP=https://minecraft.azureedge.net/bin-linux/bedrock-server-1.7.0.13.zip
     ports: 
       - 19132:19132/udp
 #      - 19133:19133/udp

@@ -2,7 +2,7 @@ version: '3'
 
 services:
   bedrock_server:
-    image: bedrock_server:latest
+    image: bedrock_server:1.8.0
     build: .
     container_name: bedrock_server
     environment:

@@ -29,5 +29,11 @@ RUN ["chmod", "+x", "/home/bedrock/startup.sh"]
 # If you enable the USER below, there will be permission issues with shared volumes
 # USER bedrock
 
+# create volumes for settings that need to be persisted.
+VOLUME /home/bedrock/bedrock_server/worlds
+VOLUME /home/bedrock/bedrock_server/server.properties
+VOLUME /home/bedrock/bedrock_server/ops.json
+VOLUME /home/bedrock/bedrock_server/whitelist.json
+
 # Added bash so you can drop to a shell to resolve errors
 ENTRYPOINT /home/bedrock/startup.sh && /bin/bash

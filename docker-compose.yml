@@ -3,6 +3,7 @@ version: '3'
 services:
   bedrock_server:
     image: bedrock_server:latest
+    build: .
     container_name: bedrock_server
     environment:
 # Update this as the file changes.  Please be sure to agree to the EULA

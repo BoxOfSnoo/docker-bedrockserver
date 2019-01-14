@@ -8,7 +8,7 @@ if not exist "data\server.properties" (
         exit /b 1
     )
 
-    xcopy ".\data\server.properties.default" ".\data\server.properties" /y
+    copy ".\data\server.properties.default" ".\data\server.properties" /y
 )
 
 docker-compose run --service-ports --rm bedrock_server

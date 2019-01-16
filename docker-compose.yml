@@ -11,5 +11,10 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - ./data/worlds:/home/bedrock/bedrock_server/worlds
+      # temporarily we are mapping the worlds folder to an import folder because when
+      # mounting this volume in Windows at least the bedrock server crashes.
+      - ./data/worlds:/home/bedrock/bedrock_server/import/worlds
       - ./data/config:/home/bedrock/bedrock_server/config
+      
+    # override the default entrypoint to include access to a bash terminal for debugging.
+    entrypoint: bash -c "/home/bedrock/startup.sh && /bin/bash"

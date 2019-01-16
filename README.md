@@ -34,7 +34,7 @@ You can put an existing Bedrock world file in the data/worlds folder and point t
 
 Change to the directory containing the Dockerfile and run:
 
-```
+```bash
 docker build -t bedrock_server .
 ```
 
@@ -44,7 +44,7 @@ If you are used to using docker-compose, you may be used to using `docker-compos
 
 Instead, use:
 
-```
+```bash
 docker-compose run --service-ports --rm bedrock_server
 ```
 

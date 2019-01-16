@@ -12,28 +12,31 @@ CMD ["/sbin/my_init"]
 RUN apt-get update
 # RUN apt-get -y upgrade -o Dpkg::Options::="--force-confold"
 RUN apt-get -y install unzip libcurl4 curl nano
-
-RUN useradd -ms /bin/bash bedrock
-RUN su - bedrock -c "mkdir -p bedrock_server/data/worlds"
-RUN chown -R bedrock:bedrock /home/bedrock/bedrock_server/data/worlds
-
 # Clean up apt-get when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-EXPOSE 19132/udp
+RUN useradd -ms /bin/bash bedrock
 
-# Entry
-COPY ./startup.sh /home/bedrock
-RUN ["chmod", "+x", "/home/bedrock/startup.sh"]
+WORKDIR /home/bedrock
+
+RUN su - bedrock -c "mkdir -p bedrock_server/worlds"
+RUN chown -R bedrock:bedrock bedrock_server/worlds
+RUN su - bedrock -c "mkdir -p bedrock_server/config"
+RUN chown -R bedrock:bedrock bedrock_server/config
+
+# Copy the startup script
+COPY ./startup.sh .
+RUN chmod +x startup.sh
 
 # If you enable the USER below, there will be permission issues with shared volumes
 # USER bedrock
 
 # create volumes for settings that need to be persisted.
-VOLUME /home/bedrock/bedrock_server/worlds
-VOLUME /home/bedrock/bedrock_server/server.properties
-VOLUME /home/bedrock/bedrock_server/ops.json
-VOLUME /home/bedrock/bedrock_server/whitelist.json
+#VOLUME /home/bedrock/bedrock_server/worlds
+#VOLUME /home/bedrock/bedrock_server/config
+
+EXPOSE 19132/udp
+EXPOSE 19133/udp
 
 # Added bash so you can drop to a shell to resolve errors
 ENTRYPOINT /home/bedrock/startup.sh && /bin/bash

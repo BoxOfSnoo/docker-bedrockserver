@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Update this as the file changes.  Please be sure to agree to the EULA
-BEDROCK_DOWNLOAD_ZIP=https://minecraft.azureedge.net/bin-linux/bedrock-server-1.8.0.24.zip
+BEDROCK_DOWNLOAD_ZIP=https://minecraft.azureedge.net/bin-linux/bedrock-server-1.9.0.15.zip
 ZIPFILE=$(basename $BEDROCK_DOWNLOAD_ZIP)
 
 cd /home/bedrock/bedrock_server
@@ -46,3 +46,6 @@ if [ -f "bedrock_server" ]; then
 else
    echo "Server software not downloaded or unpacked!"
 fi
+
+# let's copy the resulting world data back out
+cp -r -u worlds/* import/worlds/

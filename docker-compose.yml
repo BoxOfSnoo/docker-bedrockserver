@@ -2,18 +2,19 @@ version: '3'
 
 services:
   bedrock_server:
-    image: bedrock_server:latest
+    image: bedrock_server:1.9.0
+    build: .
     container_name: bedrock_server
-    environment:
-# Update this as the file changes.  Please be sure to agree to the EULA
-      - BEDROCK_DOWNLOAD_ZIP=https://minecraft.azureedge.net/bin-linux/bedrock-server-1.8.0.24.zip
     ports: 
       - 19132:19132/udp
-#      - 19133:19133/udp
+      - 19133:19133/udp
     stdin_open: true
     tty: true
     volumes:
-      - ./data/worlds:/home/bedrock/bedrock_server/worlds
-      - ./data/server.properties:/home/bedrock/bedrock_server/server.properties
-      - ./data/ops.json:/home/bedrock/bedrock_server/ops.json
-      - ./data/whitelist.json:/home/bedrock/bedrock_server/whitelist.json
+      # temporarily we are mapping the worlds folder to an import folder because when
+      # mounting this volume in Windows at least the bedrock server crashes.
+      - ./data/worlds:/home/bedrock/bedrock_server/import/worlds
+      - ./data/config:/home/bedrock/bedrock_server/config
+      
+    # override the default entrypoint to include access to a bash terminal for debugging.
+    entrypoint: bash -c "/home/bedrock/startup.sh && /bin/bash"

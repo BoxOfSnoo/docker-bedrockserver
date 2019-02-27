@@ -1,0 +1,4 @@
+* text eol=lf
+* text eol=lf
+
+*.cmd eol=crlf

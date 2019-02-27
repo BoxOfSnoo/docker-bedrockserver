@@ -8,26 +8,30 @@ FROM phusion/baseimage:0.11
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
 
-# ...put your own build instructions here...
-RUN apt-get update
-# RUN apt-get -y upgrade -o Dpkg::Options::="--force-confold"
-RUN apt-get -y install unzip libcurl4 curl nano
+# update packages and install dependencies
+RUN apt-get update \
+    && apt-get -y install unzip libcurl4 curl nano \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN useradd -ms /bin/bash bedrock
-RUN su - bedrock -c "mkdir -p bedrock_server/data/worlds"
-RUN chown -R bedrock:bedrock /home/bedrock/bedrock_server/data/worlds
 
-# Clean up apt-get when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+WORKDIR /home/bedrock
 
-EXPOSE 19132/udp
+# Copy the startup script
+COPY ./startup.sh .
 
-# Entry
-COPY ./startup.sh /home/bedrock
-RUN ["chmod", "+x", "/home/bedrock/startup.sh"]
+RUN chmod +x startup.sh \
+    && mkdir -p bedrock_server/worlds \
+    && mkdir -p bedrock_server/config \
+    && chown -R bedrock:bedrock .
 
 # If you enable the USER below, there will be permission issues with shared volumes
-# USER bedrock
+USER bedrock
 
-# Added bash so you can drop to a shell to resolve errors
-ENTRYPOINT /home/bedrock/startup.sh && /bin/bash
+# create volumes for settings that need to be persisted.
+VOLUME /home/bedrock/bedrock_server/worlds /home/bedrock/bedrock_server/config
+
+EXPOSE 19132/udp 19133/udp
+
+ENTRYPOINT /home/bedrock/startup.sh

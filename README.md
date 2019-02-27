@@ -9,18 +9,18 @@ This docker image downloads and runs the Bedrock Dedicated Server at runtime.
 ### Windows users
 
 * Clone this repository to a local folder
-* Run `startup.cmd` in a command prompt
+* Run `startserver.cmd` in a command prompt
 
 ### Linux users
 
 * Clone this repository to a local folder
-* Run `startup.sh`
+* Run `startserver.sh`
 
 ## Customisation
 
 ### Update for newer Bedrock Server version
 
-When Mojang update the Bedrock Dedicated Server to a new version (current version 1.8.0) update the `docker-compose.yml` file to point to the new URI and change the tag number in the image node to reflect the new version.
+When Mojang update the Bedrock Dedicated Server to a new version (current version 1.9.0) update the `docker-compose.yml` file to point to the new URI and change the tag number in the image node to reflect the new version.
 
 ### Modify server settings
 

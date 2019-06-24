@@ -2,7 +2,7 @@ version: '3'
 
 services:
   bedrock_server:
-    image: bedrock_server:1.9.0
+    image: bedrock_server:1.11.4
     build: .
     container_name: bedrock_server
     ports: 

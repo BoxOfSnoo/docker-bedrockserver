@@ -12,9 +12,12 @@ CMD ["/sbin/my_init"]
 RUN apt-get update \
     && apt-get -y install unzip libcurl4 curl nano \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+    && useradd -ms /bin/bash bedrock \
+    && mkdir /etc/service/bedrock
 
-RUN useradd -ms /bin/bash bedrock
+COPY run.sh /etc/service/bedrock/run
+RUN chmod +x /etc/service/bedrock/run
 
 WORKDIR /home/bedrock
 
@@ -26,12 +29,7 @@ RUN chmod +x startup.sh \
     && mkdir -p bedrock_server/config \
     && chown -R bedrock:bedrock .
 
-# If you enable the USER below, there will be permission issues with shared volumes
-USER bedrock
-
 # create volumes for settings that need to be persisted.
 VOLUME /home/bedrock/bedrock_server/worlds /home/bedrock/bedrock_server/config
 
 EXPOSE 19132/udp 19133/udp
-
-ENTRYPOINT /home/bedrock/startup.sh

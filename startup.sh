@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Update this as the file changes.  Please be sure to agree to the EULA
-BEDROCK_DOWNLOAD_ZIP=https://minecraft.azureedge.net/bin-linux/bedrock-server-1.9.0.15.zip
+BEDROCK_DOWNLOAD_ZIP=https://minecraft.azureedge.net/bin-linux/bedrock-server-1.11.4.2.zip
 ZIPFILE=$(basename $BEDROCK_DOWNLOAD_ZIP)
 
 cd /home/bedrock/bedrock_server
 
 if [ ! -f $ZIPFILE ]; then
-   echo "Downloading file"
+   echo "Downloading Bedrock Server code"
 
    # Download and if successful, unzip (don't allow overwrites)
    curl --fail -O $BEDROCK_DOWNLOAD_ZIP && unzip -n -q $ZIPFILE
@@ -28,8 +28,11 @@ function copy_config() {
       cp $filename.defaults $filename
       cp $filename.defaults config/$filename
    fi
+
+   # TODO we need to adjust the copied file permissions as required.
 }
 
+echo "Copying config and world data"
 copy_config server.properties
 copy_config ops.json
 copy_config whitelist.json
@@ -47,5 +50,5 @@ else
    echo "Server software not downloaded or unpacked!"
 fi
 
-# let's copy the resulting world data back out
+echo "Copying world data back out"
 cp -r -u worlds/* import/worlds/

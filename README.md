@@ -20,7 +20,7 @@ This docker image downloads and runs the Bedrock Dedicated Server at runtime.
 
 ### Update for newer Bedrock Server version
 
-When Mojang update the Bedrock Dedicated Server to a new version (current version 1.9.0) update the `docker-compose.yml` file to point to the new URI and change the tag number in the image node to reflect the new version.
+When Mojang update the Bedrock Dedicated Server to a new version (current version 1.11.4) update the `docker-compose.yml` file to point to the new URI and change the tag number in the image node to reflect the new version.
 
 ### Modify server settings
 
